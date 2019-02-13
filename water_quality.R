@@ -45,6 +45,18 @@ saveRDS(water_level, "water_level2019.rds")
 
 rm(wl1,wl2,wl3)
 
+###Load New data as follows###
+#load new data as copied from above
+
+#join data to alredy joined files
+wl<-readRDS("water_level2019.rds")
+
+water_level<-wl %>% 
+  full_join(., INSERT NEW FILES HERE)
+
+saveRDS(water_level, "water_level2019.rds")
+rm(INSERT NEW FILES HERE)
+
 #####load salinity hobo data#####
 #different this year in that we will be 
 #assigning stations as we upload data because we have hobos out at morethan just the weir
@@ -83,3 +95,14 @@ hobo_salinity<-sal1 %>%
 
 saveRDS(hobo_salinity, "hobo_salinity_2019.rds")
 rm(sal1,sal2,sal3)
+###Load New data as follows###
+#load new data using the code above
+
+#join data to alredy joined files
+salinity<-readRDS("hobo_salinity_2019.rds")
+
+hobo_salinity<-salinity %>% 
+  full_join(., INSERT NEW FILES HERE)
+
+saveRDS(hobo_salinity, "hobo_salinity_2019.rds")
+rm(INSERT NEW FILES HERE)
