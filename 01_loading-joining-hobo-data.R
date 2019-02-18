@@ -64,15 +64,34 @@ wl3$datetime<-mdy_hms(wl3$datetime)
 wl3<-wl3 %>% 
   convert(num("kPA","temp","barokPA","depth"))
 wl3$station<-"mid"
-#join data to alredy joined files
+
+wl4 <- read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2019/csv_files/north_2019_02_14_wl.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
+wl4<-wl4[-c(1:2),-1] #removes the first two rows and the first column
+wl4$datetime<-paste0(wl4$V2, " ", wl4$V3) #combines the date column and the time column so that it is the same as the other data.  Will probably be separated again during analysis
+colnames(wl4)<-wl_head
+wl4$datetime<-mdy_hms(wl4$datetime)
+wl4<-wl4 %>% 
+  convert(num("kPA","temp","barokPA","depth"))
+wl4$station<-"north"
+
+wl5 <- read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2019/csv_files/south_2019_02_14_wl.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
+wl5<-wl5[-c(1:2),-c(1,8:9)] #removes the first two rows and the first column
+wl5$datetime<-paste0(wl5$V2, " ", wl5$V3) #combines the date column and the time column so that it is the same as the other data.  Will probably be separated again during analysis
+colnames(wl5)<-wl_head
+wl5$datetime<-mdy_hms(wl5$datetime)
+wl5<-wl5 %>% 
+  convert(num("kPA","temp","barokPA","depth"))
+wl5$station<-"south"
+
+#####join data to alredy joined files#####
 wl<-readRDS("water_level2019.rds")
 
 water_level<-wl %>% 
-  full_join(., wl2) %>% 
-  full_join(., wl3)
+  full_join(., wl4) %>% 
+  full_join(., wl5)
 
 saveRDS(water_level, "water_level2019.rds")
-rm(wl2, wl3,wl)
+rm(wl4, wl5,wl)
 
 #####load salinity hobo data#####
 #different this year in that we will be 
