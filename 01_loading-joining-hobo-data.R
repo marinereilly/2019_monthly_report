@@ -47,10 +47,11 @@ rm(wl1,wl2,wl3)
 
 ###Load New data as follows###
 #load new data as copied from above
-wl2 <- read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2019/csv_files/weir_2019_02_14_wl.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
+wl2 <- read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2019/csv_files/weir_2019_03_13_wl.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
+View(wl2)
 wl2<-wl2[-c(1:2),-1] #removes the first two rows and the first column
-wl2$datetime<-paste0(wl2$V2, " ", wl2$V3) #combines the date column and the time column so that it is the same as the other data.  Will probably be separated again during analysis
-colnames(wl2)<-wl_head
+ #combines the date column and the time column so that it is the same as the other data.  Will probably be separated again during analysis
+colnames(wl2)<-c("datetime","kPA","temp","barokPA","depth")
 wl2$datetime<-mdy_hms(wl2$datetime)
 wl2<-wl2 %>% 
   convert(num("kPA","temp","barokPA","depth"))
