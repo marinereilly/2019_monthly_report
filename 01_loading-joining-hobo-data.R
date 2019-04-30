@@ -48,7 +48,7 @@ rm(wl1,wl2,wl3)
 ###Load New data as follows###
 #load new data as copied from above
 wl2 <- read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2019/csv_files/weir_2019_03_13_wl.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
-View(wl5)
+View(wl2)
 wl2<-wl2[-c(1:2),-1] #removes the first two rows and the first column
  #combines the date column and the time column so that it is the same as the other data.  Will probably be separated again during analysis
 colnames(wl2)<-c("datetime","kPA","temp","barokPA","depth")
@@ -57,10 +57,10 @@ wl2<-wl2 %>%
   convert(num("kPA","temp","barokPA","depth"))
 wl2$station<-"weir"
 
-wl3 <- read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2019/csv_files/mid_2019_02_14_wl.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
+wl3 <- read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2019/csv_files/mid_2019_03_27_wl.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
 wl3<-wl3[-c(1:2),-1] #removes the first two rows and the first column
 wl3$datetime<-paste0(wl3$V2, " ", wl3$V3) #combines the date column and the time column so that it is the same as the other data.  Will probably be separated again during analysis
-colnames(wl3)<-wl_head
+colnames(wl3)<-c("datetime","kPA","temp","barokPA","depth")
 wl3$datetime<-mdy_hms(wl3$datetime)
 wl3<-wl3 %>% 
   convert(num("kPA","temp","barokPA","depth"))
@@ -89,11 +89,12 @@ wl<-readRDS("water_level2019.rds")
 
 water_level<-wl %>% 
   full_join(., wl2) %>% 
+  full_join(., wl3) %>% 
   full_join(., wl4) %>% 
   full_join(., wl5)
 
 saveRDS(water_level, "water_level2019.rds")
-rm(wl2,wl4, wl5,wl)
+rm(wl2,wl4, wl5,wl3)
 
 #####load salinity hobo data#####
 #different this year in that we will be 
