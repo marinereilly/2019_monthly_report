@@ -1,7 +1,7 @@
 ---
 title: "Chesapeake Biological Laboratory's Report of Monthly Cove Point Marsh Restoration Monitoring"
 author: "Erin Reilly"
-date: "February 18, 2019"
+date: "April 30, 2019"
 output: word_document
 ---
 
@@ -24,7 +24,7 @@ knitr::opts_chunk$set(echo = TRUE)
 * Demonstrations of Marsh Monitoring Techniques
 
 ##Items of Note/Concern:
-
+![The water was very high March 27th and encroaching on the dune near Beach Transect 8.  We don't believe that there was an overwash but this area continues to be vulnerable.](20190327_100344.jpg)
 
 ##Plots
 Below are the plots for the Hobos for the month of March.
