@@ -11,6 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ##Activity Summary
 ####March
+* Hobos were redeployed using steel wire and a PVC outer shell for protection March 5th after several were lost, likely because of issues with ice.   
 * Salinity Surveys
 * Download Weir and Station Hobo Data
 * Work on annual report
@@ -24,6 +25,7 @@ knitr::opts_chunk$set(echo = TRUE)
 * Demonstrations of Marsh Monitoring Techniques
 
 ##Items of Note/Concern:
+ 
 ![The water was very high March 27th and encroaching on the dune near Beach Transect 8.  We don't believe that there was an overwash but this area continues to be vulnerable.](20190327_100344.jpg)
 
 ##Plots
@@ -32,6 +34,7 @@ Below are the plots for the Hobos for the month of March.
 ###Water Level
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE, results='hide', fig.keep='all'}
+
 library(dplyr)
 library(ggplot2)
 library(lubridate)
@@ -57,7 +60,7 @@ theme_hoboplot<-function(){
 }
 
 water_level<-readRDS("water_level2019.rds")
-water_level$date<-mdy(water_level$date)
+water_level$date<-date(water_level$datetime)
 water_level$hour<-hour(water_level$datetime)
 water_level$month<-month(water_level$datetime)
 water_level$station<-as.factor(water_level$station)
@@ -69,17 +72,17 @@ a<-water_level %>%
   select(date, hour, temp, depth, station) %>% 
   group_by(date, hour, station) %>% 
   summarise_if(is.numeric, mean) %>% 
-  mutate(datetime=ymd_hm(paste0(date, " ", hour, ":00"))) %>% 
+  mutate(datetime=ymd_hm(paste0(date, " ", hour, ":00")))%>% 
   ggplot(., aes(x=datetime))+
-  geom_point(aes(y=depth, color = station))+
+  geom_line(aes(y=depth, color = station), size=1.2)+
   theme_hoboplot()+
   scale_color_manual(values = hpal7, breaks=c("north", "mid", "south", "weir"), name="Station")+
-  ggtitle("January Water Level - Hourly means")+
+  ggtitle("March Water Level - Hourly means")+
   xlab("Date")+ylab("Depth (m)")+ 
   guides(colour = guide_legend(override.aes = list(size=2.5)))
 a
 ```
-
+![Note the jump in depth March 5th with redeployment of the hobos and that there are missing data points because of lost Hobos.]
 
 
 ###Salinity
@@ -113,7 +116,7 @@ hpal7<-c("north"="#FF5765", "mid" = "#FFDB15", "south"="#8A6FDF", "weir"="#A8E10
 
 salinity<-readRDS("hobo_salinity_2019.rds")
 
-salinity$date<-mdy(salinity$date)
+salinity$date<-date(salinity$datetime)
 salinity$hour<-hour(salinity$datetime)
 salinity$month<-month(salinity$datetime)
 salinity$station<-as.factor(salinity$station)
@@ -125,16 +128,16 @@ b<-salinity %>%
   summarise_if(is.numeric, mean) %>% 
   mutate(datetime=ymd_hm(paste0(date, " ", hour, ":00"))) %>% 
   ggplot(., aes(x=datetime))+
-  geom_point(aes(y=salinity, color = station))+
+  geom_line(aes(y=salinity, color = station), size =1.2)+
   theme_hoboplot()+
   scale_color_manual(values = hpal7, breaks=c("north", "mid", "south", "weir"), name="Station")+
-  ggtitle("January Salinity - Hourly means")+
+  ggtitle("March Salinity - Hourly means")+
   xlab("Date")+ylab("Salinity (ppt)")+ 
   guides(colour = guide_legend(override.aes = list(size=2.5)))
 b
 
 ```
-
+![There appears to be some temporary increases in the salinity near the weir. During Kayak Salinity surveys we have started taking extra points near the weir and haven't noticed elevated salinities.]
 
 
 
