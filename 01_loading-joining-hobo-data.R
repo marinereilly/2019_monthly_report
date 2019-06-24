@@ -85,7 +85,6 @@ wl4$station<-"north"
 
 wl5 <- read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2019/csv_files/south_2019_04_16_wl.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
 wl5<-wl5[-c(1:2),-1] #removes the first two rows and the first column
-
 colnames(wl5)<-c("datetime","kPA","temp","barokPA","depth")
 wl5$datetime<-mdy_hms(wl5$datetime)
 wl5<-wl5 %>% 
@@ -93,8 +92,45 @@ wl5<-wl5 %>%
 wl5$station<-"south"
 wl5<-drop_na(wl5, depth)
 
+wl7<-read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2019/csv_files/weir_2019_03_13_wl.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
+wl7<-wl7[-c(1:2),-1] #removes the first two rows and the first column
+colnames(wl7)<-c("datetime","kPA","temp","barokPA","depth")
+wl7$datetime<-mdy_hms(wl7$datetime)
+wl7<-wl7 %>% 
+  convert(num("kPA","temp","barokPA","depth"))
+wl7$station<-"weir"
+
+wl8<-read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2019/csv_files/weir_2019_05_07_wl.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
+wl8<-wl8[-c(1:2),-1] #removes the first two rows and the first column
+colnames(wl8)<-c("datetime","kPA","temp","barokPA","depth")
+wl8$datetime<-mdy_hms(wl8$datetime)
+wl8<-wl8 %>% 
+  convert(num("kPA","temp","barokPA","depth"))
+wl8$station<-"weir"
+
+wl9<-read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2019/csv_files/weir_2019_05_24_wl.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
+wl9<-wl9[-c(1:2),-1] #removes the first two rows and the first column
+colnames(wl9)<-c("datetime","kPA","temp","barokPA","depth")
+wl9$datetime<-mdy_hms(wl9$datetime)
+wl9<-wl9 %>% 
+  convert(num("kPA","temp","barokPA","depth"))
+wl9$station<-"weir"
+
+wl10<-read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2019/csv_files/weir_2019_06_20_wl.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
+wl10<-wl10[-c(1:2),-1] #removes the first two rows and the first column
+colnames(wl10)<-c("datetime","kPA","temp","barokPA","depth")
+wl10$datetime<-mdy_hms(wl10$datetime)
+wl10<-wl10 %>% 
+  convert(num("kPA","temp","barokPA","depth"))
+wl10$station<-"weir"
+
+
+
 #####join data to alredy joined files#####
 wl<-readRDS("water_level2019.rds")
+
+
+
 
 water_level<-wl %>% 
   full_join(., wl2) %>% 
