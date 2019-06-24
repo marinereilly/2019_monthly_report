@@ -129,18 +129,13 @@ wl10$station<-"weir"
 #####join data to alredy joined files#####
 wl<-readRDS("water_level2019.rds")
 
-
-
-
 water_level<-wl %>% 
-  full_join(., wl2) %>% 
-  full_join(., wl3) %>% 
-  full_join(., wl4) %>% 
-  full_join(., wl5) %>% 
-  full_join(., wl6)
+  full_join(., wl9) %>% 
+  full_join(., wl8) %>% 
+  full_join(., wl10)
 
 saveRDS(water_level, "water_level2019.rds")
-rm(wl2,wl4, wl5,wl3, wl6)
+rm(wl2,wl4, wl5,wl3, wl6, wl7, wl8, wl9, wl10,wl)
 
 #####load salinity hobo data#####
 #different this year in that we will be 
@@ -182,32 +177,31 @@ saveRDS(hobo_salinity, "hobo_salinity_2019.rds")
 rm(sal1,sal2,sal3)
 ###Load New data as follows####
 #load new data using the code above
-sal2 <- read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2019/csv_files/weir_2019_04_25_sal.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
+sal2 <- read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2019/csv_files/weir_2019_05_07_sal.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
 sal2<-sal2[-c(1:2),-1] #removes the first two rows and the first column
-sal2$datetime<-paste0(sal2$V2," ",sal2$V3 )
-colnames(sal2)<-sal_head
+colnames(sal2)<-c("datetime","conductivity", "temperature", "sp_cond", "salinity")
 sal2$datetime<-mdy_hms(sal2$datetime)
 sal2<-sal2 %>% 
   convert(num("conductivity", "temperature", "sp_cond", "salinity"))
 sal2$station<-"weir"
 
-sal3 <- read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2019/csv_files/mid_2019_04_16_sal.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
+sal3 <- read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2019/csv_files/weir_2019_05_24_sal.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
 sal3<-sal3[-c(1:2),-1] #removes the first two rows and the first column
 sal3$datetime<-paste0(sal3$V2, " ", sal3$V3) #combines the date column and the time column so that it is the same as the other data.  Will probably be separated again during analysis
 colnames(sal3)<-c("datetime","conductivity", "temperature", "sp_cond", "salinity")
 sal3$datetime<-mdy_hms(sal3$datetime)
 sal3<-sal3 %>% 
   convert(num("conductivity", "temperature", "sp_cond", "salinity"))
-sal3$station<-"mid"
+sal3$station<-"weir"
 
-sal4 <- read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2019/csv_files/north_2019_04_16_sal.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
+sal4 <- read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2019/csv_files/weir_2019_06_20_sal.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
 sal4<-sal4[-c(1:2),-1] #removes the first two rows and the first column
-sal4$datetime<-paste0(sal4$V2, " ", sal4$V3) #combines the date column and the time column so that it is the same as the other data.  Will probably be separated again during analysis
+#sal4$datetime<-paste0(sal4$V2, " ", sal4$V3) #combines the date column and the time column so that it is the same as the other data.  Will probably be separated again during analysis
 colnames(sal4)<-c("datetime","conductivity", "temperature", "sp_cond", "salinity")
 sal4$datetime<-mdy_hms(sal4$datetime)
 sal4<-sal4 %>% 
   convert(num("conductivity", "temperature", "sp_cond", "salinity"))
-sal4$station<-"north"
+sal4$station<-"weir"
 
 sal5 <- read.csv("H:/0_HarrisLab/1_CURRENT PROJECT FOLDERS/Dominion/01_new_dominion/surveys/hobo/data/2019/csv_files/south_2019_04_16_sal.csv", header=FALSE, na.strings="", stringsAsFactors=FALSE)
 sal5<-sal5[-c(1:2),-1] #removes the first two rows and the first column
@@ -224,8 +218,8 @@ salinity<-readRDS("hobo_salinity_2019.rds")
 hobo_salinity<-salinity %>% 
   full_join(., sal2) %>%
   full_join(., sal3) %>% 
-  #full_join(., sal4) %>% 
-  full_join(., sal5)
+  full_join(., sal4) #%>% 
+  #full_join(., sal5)
 
 saveRDS(hobo_salinity, "hobo_salinity_2019.rds")
 rm(sal2, sal3, sal4, sal5,salinity)
